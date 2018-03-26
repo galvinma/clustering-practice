@@ -1,7 +1,7 @@
 package main
 
 import (
-    // "fmt"
+    "log"
 
     // "gonum.org/v1/gonum/mat"
     "github.com/galvinma/agora/algorithm"
@@ -9,6 +9,11 @@ import (
 
 func main() {
 
-  hierdenc.InitSoybeanLarge()
+  soybeans := hierdenc.InitSoybeanLarge()
+
+  // Return a map of this data
+  for key, value := range soybeans {
+    log.Println("Key:", key, "Value:", value)
+  }
 
 }
