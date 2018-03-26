@@ -1,14 +1,14 @@
 package hierdenc
 
-import (
-    "bufio"
-    "fmt"
-    "os"
-    "log"
-    "path/filepath"
+// import (
+//     "bufio"
+//     "fmt"
+//     "os"
+//     "log"
+//     "path/filepath"
 
     // "gonum.org/v1/gonum/mat"
-)
+// )
 
 // Get map of catagorial data
 

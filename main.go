@@ -9,6 +9,6 @@ import (
 
 func main() {
 
-  hierdenc.CreateMatrix()
+  hierdenc.InitSoybeanLarge()
 
 }
