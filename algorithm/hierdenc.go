@@ -6,16 +6,15 @@ package hierdenc
 //     "os"
 //     "log"
 //     "path/filepath"
-
-    // "gonum.org/v1/gonum/mat"
+//
+//     "gonum.org/v1/gonum/mat"
 // )
-
-// Get map of catagorial data
-
 
 
 // Find the densest object in dataset.
-//
+
+
+
 // Initial implementation is a simple search.
 // Later create an index function that supplies constantly refreshed list.
 
