@@ -8,8 +8,6 @@ import (
     "log"
     "path/filepath"
     "strconv"
-
-    // "gonum.org/v1/gonum/mat"
 )
 
 // Grabs catagorical data from file and creates a map
