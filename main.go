@@ -1,7 +1,7 @@
 package main
 
 import (
-    // "log"
+    "log"
 
     "github.com/galvinma/agora/algorithm"
 )
@@ -9,6 +9,7 @@ import (
 func main() {
 
   soybeans := hierdenc.InitSoybeanLarge()
-  clusters := hierdenc.FindClusters(soybeans)
+  index := hierdenc.HierdencIndex(soybeans, 1)
+  log.Println(index)
 
 }

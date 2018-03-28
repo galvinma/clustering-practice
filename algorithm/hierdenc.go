@@ -1,32 +1,46 @@
 package hierdenc
-
+//
 // import (
-//     "bufio"
-//     "fmt"
-//     "os"
 //     "log"
-//     "path/filepath"
 // )
+
+// m & n represent the clusters to be merged
+func mergeMaps(m map[int][]int, n map[int][]int) map[int][]int {
+    for k, v := range(n) {
+        m[k] = v
+    }
+    return  m
+}
+
+// a & b are cluster IDs in cluster map
+func mergeClusters(o map[int]map[int][]int, a int, b int) map[int]map[int][]int {
+    joined = mergeMaps(o[a], o[b])
+    delete(o, a)
+    delete(o, b)
+    o[a] = joined
+    return o
+}
 
 func FindClusters(objects map[int][]int, r int) {
     // Initialize variables
     r := 1            // radius of hypercubes
     k := 0            // number of leaf clusters
     kr := 0           // number of clusters at level r
-    Gk := []int       // kth cluster
     U := [][]int        // set of hypercube centers
 
+    // Dictionary to keep all clusters and hypercubes
+    var clusters = map[int]map[int][]int
+
     // Get densest hypercube and HIERDENC density index
-    densest, index := hierdenc.HierdencIndex(objects, r)
+    index := hierdenc.HierdencIndex(objects, r)
     n := len(index)           // number of objects
-    // should come up with a better way of grabbing number of attributes. This is
-    // unnecessary and will increase runtime.
     m := len(index[0])        // number of catagorical attributes
 
     for r < m {
         // If density is 1, increase r
         if index[densest] <= 1 {
             r = r + 1
+            // update the index
         }
         // Merge clusters connected via distance r...
               // code here...
@@ -47,18 +61,18 @@ func FindClusters(objects map[int][]int, r int) {
 
 
 // Create a new leaf cluster.
-
-
+//
+//
 // Try and move to the denest hypercube with radius r.
 // Repeat until no available hypercube's within radius r.
-
-    // Collect the hypercube's cells.
-
-
+//
+//     Collect the hypercube's cells.
+//
+//
 // Cluster until r = m, or  density(R) < 1%.
-
-
-
+//
+//
+//
 // Globals
 // r    // radius of hypercubes
 // R    // set of unclustered cells
