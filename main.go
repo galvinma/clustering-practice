@@ -11,6 +11,6 @@ func main() {
   soybeans := hierdenc.InitSoybeanLarge()
   clusters := hierdenc.HIERDENC(soybeans)
   for k, v := range clusters {
-    log.Println("Cluster ID: ", k, "Object ID: ", v)
+    log.Println("Object ID: ", k, "Cluster ID: ", v)
   }
 }

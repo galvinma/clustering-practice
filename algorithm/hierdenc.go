@@ -6,35 +6,9 @@ import (
 
 )
 
-// // m & n represent the clusters to be merged
-// func mergeMaps(m map[int][]int, n map[int][]int) map[int][]int {
-//     for k, v := range(n) {
-//         m[k] = v
-//     }
-//     return  m
-// }
-//
-// // a & b are cluster IDs in cluster map
-// func mergeClusters(o map[int]map[int][]int, a int, b int) map[int]map[int][]int {
-//     joined = mergeMaps(o[a], o[b])
-//     delete(o, a)
-//     delete(o, b)
-//     o[a] = joined
-//     return o
-// }
-
-// Check if a given object has been assigned a cluster
-// func checkAssigned(id int, l []int) bool {
-//   for i := range l {
-//       if i == id {
-//           return true
-//       }
-//   }
-//   return false
-// }
 
 
-func HIERDENC(objects map[int][]int) map[int][]int{
+func HIERDENC(objects map[int][]int) map[int]int{
     // Initialize variables
     log.Println("Entering HIERDENC function...")
     r := 1            // radius of hypercubes
@@ -48,6 +22,7 @@ func HIERDENC(objects map[int][]int) map[int][]int{
 
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
+    log.Println(index)
     // n := len(index)           // number of objects
     // m := len(index[0])        // number of catagorical attributes
 
@@ -63,21 +38,17 @@ func HIERDENC(objects map[int][]int) map[int][]int{
             // } else {
             // Cluster ID in the map
 
-
-
+            // If object not in map, create a new cluster
             if clusters[object.ID] == 0 {
                 clusters[object.ID] = id
-                id++
-            }
-
-            for k,v := range objects {
-                hd, _ := HammingDistance(objects[object.ID], v)
-                if hd <= r {
-                    // Add object to the list of sorted IDs
-                    U = append(U, k)
-                    // append to the cluster ID the new object
-                    clusters[id] = append(clusters[id], k)
+                for k,v := range objects {
+                    hd, _ := HammingDistance(objects[object.ID], v)
+                    if hd <= r {
+                        // Add object to current cluster
+                        clusters[k] = id
+                    }
                 }
+                id++
             }
 
 
