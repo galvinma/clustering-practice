@@ -16,6 +16,8 @@ func HIERDENC(objects map[int][]int) map[int]int{
 
     // Dependent on connectivity score check
     proceed := true
+    // Worst silhouette score is -1
+    sil := -1.0
 
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
@@ -35,19 +37,17 @@ func HIERDENC(objects map[int][]int) map[int]int{
                 r = r + 1
                 // Update the index
                 index = HierdencIndex(objects, r)
-
-                // Merge clusters here, then break
-                before := CalculateSilhouetteScore(clusters, objects)
-                MergeClusters(clusters, objects, r)
-                after := CalculateSilhouetteScore(clusters, objects)
-                if after < before {
-                    proceed = false
-                }
+                checksil := CalculateSilhouetteScore(clusters, objects)
                 // Logging for troubleshooting
                 log.Println("Current radius:", r)
-                log.Println("SC before merge:", before)
-                log.Println("SC after merge:", after)
-                log.Println("Value of proceed:", proceed)
+                log.Println("sil:", sil)
+                log.Println("checksil:", checksil)
+                if checksil > sil {
+                    MergeClusters(clusters, objects, r)
+                    sil = checksil
+                } else {
+                    proceed = false
+                }
                 break
             }
 

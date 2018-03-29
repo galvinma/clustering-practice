@@ -60,7 +60,6 @@ func getUnrelatedClusters(target int, clusters map[int]int) []int {
 }
 
 func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float64 {
-
     // For object calculate average distance between objects in it's cluster (ai)
     var ai map[int]float64
     ai = make(map[int]float64)
@@ -83,7 +82,7 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
         }
     }
 
-    // For object and any cluster NOT containing the objectm calculate the
+    // For object and any cluster NOT containing the object, calculate the
     // objects average distance of all objects in the given cluster. Find the
     // minimum such value with respoect to all clusters (bi)
     var bi map[int]float64
