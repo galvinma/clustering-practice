@@ -2,11 +2,17 @@ package hierdenc
 
 import (
     "log"
-    // "reflect"
 
 )
 
+func mergeClusters() {
+    // Get all objects associated with both input clusters
 
+
+
+    // If any two objects are within r, merge clusters and return
+
+}
 
 func HIERDENC(objects map[int][]int) map[int]int{
     // Initialize variables
@@ -22,23 +28,29 @@ func HIERDENC(objects map[int][]int) map[int]int{
 
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
-    log.Println(index)
-    // n := len(index)           // number of objects
-    // m := len(index[0])        // number of catagorical attributes
+    n := len(index)           // number of objects
+    m := len(objects[0])        // number of catagorical attributes
+    log.Println("There are", n, "objects in S with", m, "catagorical attributes.")
 
-    // for r < 2 {
+    for r < 5 {
+        // Start cluster count @ 1.
+        // Map lookup relies on nil value of 0 for non-existant key
         id := 1
         for _, object := range index {
             // If density is 1, increase r
             // Density of 1 implies no other objects within r
-            // if index[object].Density <= 1 {
-            //     r = r + 1
-            //     // Update the index
-            //     index = HierdencIndex(objects, r)
-            // } else {
-            // Cluster ID in the map
+            if object.Density <= 1 {
+                r = r + 1
+                // Update the index
+                index = HierdencIndex(objects, r)
 
-            // If object not in map, check if it can be added to an existing clusters
+                // Merge clusters here, then break
+
+
+                break
+            }
+
+            // If object not in map, check if it can be added to an existing cluster
             if clusters[object.ID] == 0 {
               // for obj #, cluster #
               for k,v := range clusters {
@@ -65,10 +77,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
                 // Increment the counter
                 id++
             }
-
-            // }
         }
-    // }
-    // log.Println(U)
+    }
     return clusters
 }

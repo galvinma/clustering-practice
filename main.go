@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-
+  log.Println("Initializing data...")
   soybeans := hierdenc.InitSoybeanLarge()
   clusters := hierdenc.HIERDENC(soybeans)
   for k, v := range clusters {
