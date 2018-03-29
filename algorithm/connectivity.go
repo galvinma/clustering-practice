@@ -116,9 +116,8 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
         bi[k] = min
     }
 
-    // for each object, calculate a silouette coefficient (sc).
+    // For each object, calculate a silouette coefficient (si).å
     // si = (bi - ai) / max(ai, bi)
-    // Object ID, Cluster ID
     var sc []float64
     for k,_ := range(clusters) {
         si := ((bi[k] - ai[k]) / math.Max(bi[k],ai[k]))
