@@ -9,14 +9,14 @@ import (
 
 
 // struct keeps cluster ID & density
-type object struct {
-    id int
-    density int
+type Object struct {
+    ID int
+    Density int
 }
 
-func HierdencIndex(objects map[int][]int, r int) ([]object) {
+func HierdencIndex(objects map[int][]int, r int) ([]Object) {
     // sorted list of densest hypercubes for radius r
-    var index []object
+    var index []Object
     for key, _ := range objects {
         // Bucket for object's density count.
         var density int
@@ -31,8 +31,8 @@ func HierdencIndex(objects map[int][]int, r int) ([]object) {
                 }
             }
         }
-        index = append(index, object{key, density})
+        index = append(index, Object{key, density})
     }
-    sort.Slice(index, func(i, j int) bool { return index[i].density > index[j].density })
+    sort.Slice(index, func(i, j int) bool { return index[i].Density > index[j].Density })
     return index
 }

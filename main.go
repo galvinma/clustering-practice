@@ -9,7 +9,8 @@ import (
 func main() {
 
   soybeans := hierdenc.InitSoybeanLarge()
-  index := hierdenc.HierdencIndex(soybeans, 1)
-  log.Println(index)
-
+  clusters := hierdenc.HIERDENC(soybeans)
+  for k, v := range clusters {
+    log.Println("Cluster ID: ", k, "Object ID: ", v)
+  }
 }
