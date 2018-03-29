@@ -37,6 +37,9 @@ func HIERDENC(objects map[int][]int) map[int]int{
     var clusters map[int]int
     clusters = make(map[int]int)
 
+    // Dependent on connectivity score check
+    proceed := true
+
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
     n := len(index)           // number of objects
@@ -44,7 +47,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
     log.Println("There are", n, "objects in S with", m, "catagorical attributes.")
 
     // Continue until edge of cube OR 98% coverage
-    for r < m && float64(len(clusters)/len(objects)) < 0.98 {
+    for r < m && float64(len(clusters)/len(objects)) < 0.98 && proceed == true{
         // Start cluster count @ 1.
         // Map lookup relies on nil value of 0 for non-existant key
         id := 1
@@ -57,7 +60,12 @@ func HIERDENC(objects map[int][]int) map[int]int{
                 index = HierdencIndex(objects, r)
 
                 // Merge clusters here, then break
+                before := CalculateSilhouetteScore(clusters)
                 mergeClusters(clusters, objects, r)
+                after := CalculateSilhouetteScore(clusters)
+                if after < before {
+                    proceed = false
+                }
                 break
             }
 
