@@ -5,29 +5,6 @@ import (
 
 )
 
-func mergeClusters(clusters map[int]int, objects map[int][]int, r int) {
-    // object id, cluster id
-    for k, v := range(clusters) {
-        // object id, cluster id
-        for m, n := range(clusters) {
-            // Test if object is within r
-            hd, _ := HammingDistance(objects[k], objects[m])
-            if hd <= r {
-                // Check if objects are in the same cluster
-                if v != n {
-                    // If not in the same cluster, merge
-                    // object id, cluster id
-                    for x, y := range(clusters) {
-                        if y == n {
-                            clusters[x] = v
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 func HIERDENC(objects map[int][]int) map[int]int{
     // Initialize variables
     log.Println("Entering HIERDENC function...")
@@ -60,12 +37,17 @@ func HIERDENC(objects map[int][]int) map[int]int{
                 index = HierdencIndex(objects, r)
 
                 // Merge clusters here, then break
-                before := CalculateSilhouetteScore(clusters)
-                mergeClusters(clusters, objects, r)
-                after := CalculateSilhouetteScore(clusters)
+                before := CalculateSilhouetteScore(clusters, objects)
+                MergeClusters(clusters, objects, r)
+                after := CalculateSilhouetteScore(clusters, objects)
                 if after < before {
                     proceed = false
                 }
+                // Logging for troubleshooting
+                log.Println("Current radius:", r)
+                log.Println("SC before merge:", before)
+                log.Println("SC after merge:", after)
+                log.Println("Value of proceed:", proceed)
                 break
             }
 
