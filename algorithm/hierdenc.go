@@ -5,22 +5,33 @@ import (
 
 )
 
-func mergeClusters() {
-    // Get all objects associated with both input clusters
-
-
-
-    // If any two objects are within r, merge clusters and return
-
+func mergeClusters(clusters map[int]int, objects map[int][]int, r int) {
+    // object id, cluster id
+    for k, v := range(clusters) {
+        // object id, cluster id
+        for m, n := range(clusters) {
+            // Test if object is within r
+            hd, _ := HammingDistance(objects[k], objects[m])
+            if hd <= r {
+                // Check if objects are in the same cluster
+                if v != n {
+                    // If not in the same cluster, merge
+                    // object id, cluster id
+                    for x, y := range(clusters) {
+                        if y == n {
+                            clusters[x] = v
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 func HIERDENC(objects map[int][]int) map[int]int{
     // Initialize variables
     log.Println("Entering HIERDENC function...")
     r := 1            // radius of hypercubes
-    // k := 0            // number of leaf clusters
-    // kr := 0           // number of clusters at level r
-    // var U []int        // set of IDs already sorted into clusters
 
     // Dictionary to keep all clusters and hypercubes
     var clusters map[int]int
@@ -32,7 +43,8 @@ func HIERDENC(objects map[int][]int) map[int]int{
     m := len(objects[0])        // number of catagorical attributes
     log.Println("There are", n, "objects in S with", m, "catagorical attributes.")
 
-    for r < 5 {
+    // Continue until edge of cube OR 98% coverage
+    for r < m && float64(len(clusters)/len(objects)) < 0.98 {
         // Start cluster count @ 1.
         // Map lookup relies on nil value of 0 for non-existant key
         id := 1
@@ -45,8 +57,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
                 index = HierdencIndex(objects, r)
 
                 // Merge clusters here, then break
-
-
+                mergeClusters(clusters, objects, r)
                 break
             }
 
