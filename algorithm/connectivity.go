@@ -2,7 +2,6 @@ package hierdenc
 
 import (
     "math"
-    // "log"
 )
 
 /* Determine HIERDENC cut-off level. */
@@ -51,9 +50,9 @@ func getObjectsWithinCluster(target int, clusters map[int]int) []int {
 func getUnrelatedClusters(target int, clusters map[int]int) []int {
     var unrelated []int
     // Object ID, Cluster ID
-    for k,v := range(clusters) {
+    for _,v := range(clusters) {
         if v != target && InList(v, unrelated) == false {
-            unrelated = append(unrelated, k)
+            unrelated = append(unrelated, v)
         }
     }
     return unrelated
@@ -76,10 +75,8 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
         }
 
         // find average distance and add to map
-        if len(distances) > 0 {
-          average := avgScore(distances)
-          ai[k] = average
-        }
+        average := avgScore(distances)
+        ai[k] = average
     }
 
     // For object and any cluster NOT containing the object, calculate the
@@ -91,14 +88,11 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
     // Find bi
     // Object ID, Cluster ID
     for k,v := range(clusters) {
-        // Bucket for minumum bi
         var minbi []float64
-        // Slice of clusters an objects is NOT a part of.
+        // Object ID, Cluster ID
         unrelated := getUnrelatedClusters(v, clusters)
-        for _, c := range(unrelated) {
-            // Keep a list of distances from target object k --> object(s) in c
+        for _,c := range(unrelated) {
             var distances []float64
-            // Find objects to compare with object k
             sisters := getObjectsWithinCluster(c, clusters)
             for _, s := range(sisters) {
                 // Calculate distance between objects
@@ -106,22 +100,20 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
                 distances = append(distances, float64(hd))
             }
             // find average distance and add to map
-            if len(distances) > 0 {
-                average := avgScore(distances)
-                minbi = append(minbi, average)
-            }
+            average := avgScore(distances)
+            minbi = append(minbi, average)
         }
         min := findMin(minbi)
         bi[k] = min
     }
+
+
 
     // For each object, calculate a silouette coefficient (si).å
     // si = (bi - ai) / max(ai, bi)
     var sc []float64
     for k,_ := range(clusters) {
         si := ((bi[k] - ai[k]) / math.Max(bi[k],ai[k]))
-        // log.Println("bi[k]:",bi[k])
-        // log.Println("ai[k]:",ai[k])
         sc = append(sc, si)
     }
 
