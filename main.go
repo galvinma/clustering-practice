@@ -3,7 +3,8 @@ package main
 import (
     "log"
 
-    "github.com/galvinma/agora/algorithm"
+    "github.com/galvinma/agora/algorithm/hierdenc"
+
 )
 
 func main() {
