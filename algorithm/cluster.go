@@ -1,9 +1,5 @@
 package hierdenc
 
-import (
-    // "log"
-)
-
 func Cluster(clusters map[int]int, objects map[int][]int, index []Object, r int, id int) (map[int]int, []Object, int) {
   // Start cluster count @ 1.
   // Map lookup relies on nil value of 0 for non-existant key

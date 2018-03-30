@@ -4,58 +4,6 @@ import (
     "math"
 )
 
-func InList(i int, c []int) bool {
-    for _, cluster := range(c) {
-        if i == cluster {
-            return true
-        }
-    }
-    return false
-}
-
-func findMin(minbi []float64) float64 {
-    min := minbi[0]
-    for _, v := range(minbi) {
-        if v < min {
-            min = v
-        }
-    }
-    return min
-}
-
-func avgScore(scores []float64) float64{
-    total := 0.0
-    for _, v := range scores {
-        total += v
-    }
-    avg := total/float64(len(scores))
-    return avg
-}
-
-// Return a list of objects contained within a given cluster
-func getObjectsWithinCluster(target int, clusters map[int]int) []int {
-    var sisters []int
-    // Object ID, Cluster ID
-    for k,v := range(clusters) {
-        if v == target {
-            sisters = append(sisters, k)
-        }
-    }
-    return sisters
-}
-
-// Return a list of clusters an object does NOT belong to
-func getUnrelatedClusters(target int, clusters map[int]int) []int {
-    var unrelated []int
-    // Object ID, Cluster ID
-    for _,v := range(clusters) {
-        if v != target && InList(v, unrelated) == false {
-            unrelated = append(unrelated, v)
-        }
-    }
-    return unrelated
-}
-
 func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float64 {
     // For object calculate average distance between objects in it's cluster (ai)
     var ai map[int]float64
@@ -65,7 +13,7 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
     // Object ID, Cluster ID
     for k,v := range(clusters) {
         var distances []float64
-        sisters := getObjectsWithinCluster(v, clusters)
+        sisters := GetObjectsWithinCluster(v, clusters)
         for _, s := range(sisters) {
             // Calculate distance between objects
             hd, _ := HammingDistance(objects[k], objects[s])
@@ -73,7 +21,7 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
         }
 
         // find average distance and add to map
-        average := avgScore(distances)
+        average := AvgScore(distances)
         ai[k] = average
     }
 
@@ -88,21 +36,23 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
     for k,v := range(clusters) {
         var minbi []float64
         // Object ID, Cluster ID
-        unrelated := getUnrelatedClusters(v, clusters)
+        unrelated := GetUnrelatedClusters(v, clusters)
         for _,c := range(unrelated) {
             var distances []float64
-            sisters := getObjectsWithinCluster(c, clusters)
+            sisters := GetObjectsWithinCluster(c, clusters)
             for _, s := range(sisters) {
                 // Calculate distance between objects
                 hd, _ := HammingDistance(objects[k], objects[s])
                 distances = append(distances, float64(hd))
             }
             // find average distance and add to map
-            average := avgScore(distances)
+            average := AvgScore(distances)
             minbi = append(minbi, average)
         }
-        min := findMin(minbi)
-        bi[k] = min
+        if len(minbi) > 0 {
+          min := FindMin(minbi)
+          bi[k] = min
+        }
     }
 
 
@@ -116,6 +66,6 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
     }
 
     // Average the list and return score
-    average :=  avgScore(sc)
+    average :=  AvgScore(sc)
     return average
 }

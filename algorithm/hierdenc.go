@@ -18,7 +18,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
     // Dependent on connectivity score check
     proceed := true
     // Worst silhouette score is -1
-    // var sil float64
+    var sil float64
 
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
@@ -27,13 +27,15 @@ func HIERDENC(objects map[int][]int) map[int]int{
     log.Println("There are", n, "objects in S with", m, "catagorical attributes.")
 
     // Continue until edge of cube OR 98% coverage
-    for r < m && float64(len(clusters)/len(objects)) < 0.98 && proceed == true{
+    for r < m && float64(len(clusters)/len(objects)) < 0.98 && proceed == true {
         clusters, index, id = Cluster(clusters, objects, index, r, id)
-        sil := CalculateSilhouetteScore(clusters, objects)
-        log.Println("For r = ", r, ", sil before merge =", sil)
-        MergeClusters(clusters, objects, r)
-        sil = CalculateSilhouetteScore(clusters, objects)
-        log.Println("For r = ", r, ", sil after merge =", sil)
+        checksil := CalculateSilhouetteScore(clusters, objects)
+        if checksil > sil {
+            MergeClusters(clusters, objects, r)
+            sil = checksil
+        } else {
+            proceed = false
+        }
         r = r + 1
 
     }
