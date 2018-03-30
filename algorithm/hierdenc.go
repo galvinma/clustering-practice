@@ -9,6 +9,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
     // Initialize variables
     log.Println("Entering HIERDENC function...")
     r := 1            // radius of hypercubes
+    id := 1           // cluser ID counter
 
     // Dictionary to keep all clusters and hypercubes
     var clusters map[int]int
@@ -17,7 +18,7 @@ func HIERDENC(objects map[int][]int) map[int]int{
     // Dependent on connectivity score check
     proceed := true
     // Worst silhouette score is -1
-    sil := -1.0
+    // var sil float64
 
     // Get HIERDENC density index
     index := HierdencIndex(objects, r)
@@ -27,58 +28,14 @@ func HIERDENC(objects map[int][]int) map[int]int{
 
     // Continue until edge of cube OR 98% coverage
     for r < m && float64(len(clusters)/len(objects)) < 0.98 && proceed == true{
-        // Start cluster count @ 1.
-        // Map lookup relies on nil value of 0 for non-existant key
-        id := 1
-        for _, object := range index {
-            // If density is 1, increase r
-            // Density of 1 implies no other objects within r
-            if object.Density <= 1 {
-                r = r + 1
-                // Update the index
-                index = HierdencIndex(objects, r)
-                checksil := CalculateSilhouetteScore(clusters, objects)
-                // Logging for troubleshooting
-                log.Println("Current radius:", r)
-                log.Println("sil:", sil)
-                log.Println("checksil:", checksil)
-                if checksil > sil {
-                    MergeClusters(clusters, objects, r)
-                    sil = checksil
-                } else {
-                    proceed = false
-                }
-                break
-            }
+        clusters, index, id = Cluster(clusters, objects, index, r, id)
+        sil := CalculateSilhouetteScore(clusters, objects)
+        log.Println("For r = ", r, ", sil before merge =", sil)
+        MergeClusters(clusters, objects, r)
+        sil = CalculateSilhouetteScore(clusters, objects)
+        log.Println("For r = ", r, ", sil after merge =", sil)
+        r = r + 1
 
-            // If object not in map, check if it can be added to an existing cluster
-            if clusters[object.ID] == 0 {
-              // for obj #, cluster #
-              for k,v := range clusters {
-                  hd, _ := HammingDistance(objects[object.ID], objects[k])
-                  if hd <= r {
-                      // Add object to found cluster
-                      clusters[object.ID] = v
-                      break
-                  }
-              }
-            }
-
-            // If object cannot be added to an existing cluster, create a new cluster
-            if clusters[object.ID] == 0 {
-                clusters[object.ID] = id
-                // for obj #, attributes
-                for k,v := range objects {
-                    hd, _ := HammingDistance(objects[object.ID], v)
-                    if hd <= r {
-                        // Add object to current cluster
-                        clusters[k] = id
-                    }
-                }
-                // Increment the counter
-                id++
-            }
-        }
     }
     return clusters
 }

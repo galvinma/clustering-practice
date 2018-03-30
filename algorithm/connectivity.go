@@ -4,8 +4,6 @@ import (
     "math"
 )
 
-/* Determine HIERDENC cut-off level. */
-
 func InList(i int, c []int) bool {
     for _, cluster := range(c) {
         if i == cluster {
