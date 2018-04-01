@@ -3,6 +3,8 @@ package hierdenc
 import (
     "log"
     "sort"
+
+    "github.com/galvinma/agora/algorithm/common"
 )
 
 /* Generate a list of all objects in space S and their associated density ranking for a given radius r. */
@@ -21,7 +23,7 @@ func HierdencIndex(objects map[int][]int, r int) ([]Object) {
         // Bucket for object's density count.
         var density int
         for _, val := range objects {
-            dist, err := HammingDistance(objects[key], val)
+            dist, err := common.HammingDistance(objects[key], val)
             if err != nil {
                 log.Fatal(err)
             } else {

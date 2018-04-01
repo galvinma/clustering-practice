@@ -1,5 +1,9 @@
 package hierdenc
 
+import (
+    "github.com/galvinma/agora/algorithm/common"
+)
+
 func Cluster(clusters map[int]int, objects map[int][]int, index []Object, r int, id int) (map[int]int, []Object, int) {
   // Start cluster count @ 1.
   // Map lookup relies on nil value of 0 for non-existant key
@@ -16,7 +20,7 @@ func Cluster(clusters map[int]int, objects map[int][]int, index []Object, r int,
       if clusters[object.ID] == 0 {
         // for obj #, cluster #
         for k,v := range clusters {
-            hd, _ := HammingDistance(objects[object.ID], objects[k])
+            hd, _ := common.HammingDistance(objects[object.ID], objects[k])
             if hd <= r {
                 // Add object to found cluster
                 clusters[object.ID] = v
@@ -30,7 +34,7 @@ func Cluster(clusters map[int]int, objects map[int][]int, index []Object, r int,
           clusters[object.ID] = id
           // for obj #, attributes
           for k,v := range objects {
-              hd, _ := HammingDistance(objects[object.ID], v)
+              hd, _ := common.HammingDistance(objects[object.ID], v)
               if hd <= r {
                   // Add object to current cluster
                   clusters[k] = id

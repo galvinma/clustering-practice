@@ -1,12 +1,16 @@
 package hierdenc
 
+import (
+    "github.com/galvinma/agora/algorithm/common"
+)
+
 func MergeClusters(clusters map[int]int, objects map[int][]int, r int) {
     // object id, cluster id
     for k, v := range(clusters) {
         // object id, cluster id
         for m, n := range(clusters) {
             // Test if object is within r
-            hd, _ := HammingDistance(objects[k], objects[m])
+            hd, _ := common.HammingDistance(objects[k], objects[m])
             if hd <= r {
                 // Check if objects are in the same cluster
                 if v != n {

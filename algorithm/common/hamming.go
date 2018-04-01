@@ -1,4 +1,4 @@
-package hierdenc
+package common
 
 import (
     "errors"
