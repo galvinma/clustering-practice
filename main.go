@@ -13,6 +13,7 @@ func main() {
   log.Println("Initializing data...")
   soybeans := common.InitSoybeanLarge()
   weighted := louvain.GetWeights(soybeans)
+  initialcommunities := louvain.InitialCommunities(soybeans)
   // for k,v := range(weighted) {
   //     log.Println("For object",k,"the weight vector is",v)
   // }

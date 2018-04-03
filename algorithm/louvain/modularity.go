@@ -3,7 +3,7 @@ package louvain
 import (
     "log"
 
-    "github.com/galvinma/agora/algorithm/common"
+    // "github.com/galvinma/agora/algorithm/common"
 )
 
 /* Modularity Calculation
@@ -17,7 +17,7 @@ Q = (1/(2*m)*SUM(Aij-((ki*kj)/(2*m)))*(DELTA(ci,cj))
 Where:
 
 Q = modularity of a partition
-m = sum of the weights of all links in the network
+m = (1/2)*SUM(Aij)
 Aij = weight of the edge between i and j
 ki = sum of the weights of the links indicent to node i.
 kj = sum of the weights of the links indicent to node j.
@@ -34,6 +34,25 @@ SUM,in = sum of the weights of the links inside C
 SUM,tot = sum of the weights of the links indicent to C
 ki = sum of the weights of the links indicent to node i
 ki,in = sum of the weights of the links from i to nodes in C
-m = sum of the weights of all the links in the network 
+m = sum of the weights of all the links in the network
 
 */
+
+func ModularityDelta() float64 {
+    // community ID, modularity delta
+
+
+}
+
+func TestModularity() {
+    // community ID, modularity delta
+    var q map[int]int
+    q = make(map[int]int)
+
+    for k,v := range(data) {
+        change := ModularityDelta()
+
+
+    }
+
+}
