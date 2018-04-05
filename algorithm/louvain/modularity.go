@@ -38,21 +38,37 @@ m = sum of the weights of all the links in the network
 
 */
 
-func ModularityDelta() float64 {
-    // community ID, modularity delta
+
+// Calculate the change in modularity by placing node i into community C.
+func ModularityDelta(data map[int][]int, network map[int]int, weights map[int][]int, community int, object int) float64 {
+    // ki,in = sum of the weights of the links from i to nodes in C
+    SumCluster := GetCommunityWeights(data, network, community, object)
+    // SUM,tot = sum of the weights of the links indicent to C
+    SumIncident := SumIncidentWeight(data, object)
+    // ki,in = sum of the weights of the links from i to nodes in C
+
+
+
+
+    // m = sum of the weights of all the links in the network
+    // This will never change. Move this outside of delta calculation.
+    m := SumNetworkLinks(weights)
 
 
 }
 
-func TestModularity() {
+func Modularity() {
     // community ID, modularity delta
     var q map[int]int
     q = make(map[int]int)
 
+    // For each node, calculate the potential modularity delta for each community.
     for k,v := range(data) {
         change := ModularityDelta()
-
-
     }
+
+    // Get max modularity delta out of map.
+
+    // Merge node into community based upon max modularity delta.
 
 }
