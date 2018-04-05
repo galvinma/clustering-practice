@@ -1,9 +1,8 @@
 package louvain
 
 import (
-    "log"
+    // "log"
 
-    "github.com/galvinma/agora/algorithm/common"
 )
 
 
@@ -19,16 +18,16 @@ func GetMembers(network map[int]int, community int) []int {
     }
     return members
 }
-
-// Assign each node to its own community.
-func InitialCommunities(data map[int][]int) map[int]int {
-    // Each object is assigned to its own community.
-    log.Println("Assigning objects to initial communities..")
-    var assigned map[int]int
-    assigned = make(map[int]int)
-    length := len(data)
-    for k,_ := range(data) {
-        assigned[k] = k
-    }
-    return assigned
-}
+//
+// // Assign each node to its own community.
+// func InitialCommunities(data map[int][]int) map[int]int {
+//     // Each object is assigned to its own community.
+//     log.Println("Assigning objects to initial communities..")
+//     var assigned map[int]int
+//     assigned = make(map[int]int)
+//     length := len(data)
+//     for k,_ := range(data) {
+//         assigned[k] = k
+//     }
+//     return assigned
+// }
