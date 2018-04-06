@@ -91,5 +91,6 @@ func SumNetworkLinks(weights [][]int) float64 {
             sum += float64(y)
           }
     }
+    sum = sum/2.0
     return sum
 }
