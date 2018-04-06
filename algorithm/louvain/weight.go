@@ -6,21 +6,20 @@ import (
     "github.com/galvinma/agora/algorithm/common"
 )
 
-func GetWeights(data map[int][]int) map[int][]int {
+func GetWeights(data map[int][]int) [][]int {
     log.Println("Getting vertex weights...")
-    var weights map[int][]int
-    weights = make(map[int][]int)
-
+    weights := make([][]int, len(data))
+    for i := 0; i < len(data); i++ {
+        weights[i] = make([]int, len(data))
+    }
     for k,v := range(data) {
-        var hd []int
-        for _,m := range(data) {
-            dif, err := common.HammingDistance(v,m)
+        for m,n := range(data) {
+            dif, err := common.HammingDistance(v,n)
             if err != nil {
                 log.Fatal(err)
             }
-            hd = append(hd, dif)
+            weights[k][m] = dif
         }
-        weights[k] = hd
     }
     return weights
 }

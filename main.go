@@ -12,8 +12,8 @@ func main() {
   data := common.InitSoybeanLarge()
   weighted := louvain.GetWeights(data)
   // network := louvain.InitialCommunities(data)
-  for k,v := range(weighted) {
-      log.Println("For object",k,"the weight vector is",v)
-  }
+  // for k,v := range(weighted) {
+  //     log.Println("For object",k,"the weight vector is",v)
+  // }
 
 }
