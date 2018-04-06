@@ -24,8 +24,26 @@ func GetWeights(data map[int][]int) [][]int {
     return weights
 }
 
+// SUM,in
+// Sum of the weights for a given community
+func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]int, community int) float64 {
+    var sum float64
+    members := GetMembers(network, community)
+
+    for _,m := range(members) {
+        for _,j := range(members) {
+            sum += float64(weights[m][j])
+        }
+    }
+    // Symmetric array, get half of weight sum
+    sum = sum/2.0
+    return sum
+}
+
+
+
 // // Sum of the weights of the links incident to node i.
-// func SumIncidentWeight(data map[int][]int, object int) int {
+// func SumIncidentWeight(weighted [][]int , object int) int {
 //     var sum int
 //     for k,v := range(data) {
 //         if k == object {
@@ -37,7 +55,7 @@ func GetWeights(data map[int][]int) [][]int {
 //     }
 //     return sum
 // }
-//
+
 // // Sum of the weights between all nodes in the network.
 // // Accepts a symmetric weight matrix
 // func SumNetworkLinks(network map[int][]int) int {
@@ -50,36 +68,6 @@ func GetWeights(data map[int][]int) [][]int {
 //     return sum
 // }
 
-// // Sum of the weights for a given community
-// func SumCommunityWeights(data map[int[]int, community int) int {
-//     var sum int
-//     members := GetMembers(network, community)
-//     for _,m := range(members) {
-//         attributes := data[m]
-//         for _,n := range(members) {
-//             dif, err := common.HammingDistance(attributes,n)
-//             if err != nil {
-//                 log.Fatal(err)
-//             }
-//             hd = append(hd, dif)
-//
-//         }
-//
-//
-//
-//         }
-//
-//
-//
-//         // Calculate hamming distance
-//         dif, err := common.HammingDistance(i, network[m])
-//         if err != nil {
-//             log.Fatal(err)
-//         }
-//         sum += dif
-//     }
-//     return sum
-// }
 
 // /* For a given node (i) in community (C), return the sum of the weights of the links from i to nodes in C. */
 // func GetCommunityWeights(data map[int[]int, network map[int]int, community int, object int) int {

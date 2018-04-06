@@ -10,10 +10,10 @@ import (
 func main() {
   log.Println("Initializing data...")
   data := common.InitSoybeanLarge()
-  // weighted := louvain.GetWeights(data)
   network := louvain.InitialCommunities(data)
-  for k,v := range(network) {
-      log.Println("For object",k,"the assigned cluster is",v)
-  }
+  weights := louvain.GetWeights(data)
+  // for k,v := range(network) {
+  //     log.Println("For object",k,"the assigned cluster is",v)
+  // }
 
 }

@@ -21,10 +21,10 @@ func GetMembers(network map[int]int, community int) []int {
 func InitialCommunities(data map[int][]int) map[int]int {
     // Each object is assigned to its own community.
     log.Println("Assigning objects to initial communities..")
-    var assigned map[int]int
-    assigned = make(map[int]int)
+    var network map[int]int
+    network = make(map[int]int)
     for k,_ := range(data) {
-        assigned[k] = k
+        network[k] = k
     }
-    return assigned
+    return network
 }
