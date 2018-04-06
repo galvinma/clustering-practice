@@ -40,8 +40,24 @@ func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]in
     return sum
 }
 
+// SUM,tot
+// Sum of the weights of the links incident to nodes in a community
+func SumIncidentCommunityWeights(data map[int][]int, network map[int]int, weights [][]int, community int) float64 {
+    var sum float64
+    members := GetMembers(network, community)
+    communityweights := SumCommunityWeights(data, network, weights, community)
+    for _,m := range(members) {
+        for k,v := range(data) {
+            sum += float64(weights[m][k])
+        }
+    }
+    // Sum columns, subtract community weights
+    sum = (sum/2) - communityweights
+    return sum
+}
 
 
+// // ki
 // // Sum of the weights of the links incident to node i.
 // func SumIncidentWeight(weighted [][]int , object int) int {
 //     var sum int
@@ -56,19 +72,8 @@ func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]in
 //     return sum
 // }
 
-// // Sum of the weights between all nodes in the network.
-// // Accepts a symmetric weight matrix
-// func SumNetworkLinks(network map[int][]int) int {
-//     var sum int
-//     for _,v := range(network) {
-//         for _,y := range(v) {
-//             sum += y
-//           }
-//     }
-//     return sum
-// }
 
-
+// ki,in
 // /* For a given node (i) in community (C), return the sum of the weights of the links from i to nodes in C. */
 // func GetCommunityWeights(data map[int[]int, network map[int]int, community int, object int) int {
 //     /* Note, community variable IS NOT the current community of object. */
@@ -83,6 +88,19 @@ func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]in
 //             log.Fatal(err)
 //         }
 //         sum += dif
+//     }
+//     return sum
+// }
+
+// // m
+// // Sum of the weights between all nodes in the network.
+// // Accepts a symmetric weight matrix
+// func SumNetworkLinks(network map[int][]int) int {
+//     var sum int
+//     for _,v := range(network) {
+//         for _,y := range(v) {
+//             sum += y
+//           }
 //     }
 //     return sum
 // }
