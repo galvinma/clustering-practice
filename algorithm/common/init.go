@@ -11,20 +11,19 @@ import (
 )
 
 // Grabs catagorical data from file and creates a map
-func InitSoybeanLarge() map[int][]int {
+func initData(path string) map[int][]int {
     // Initialize map
-    var soybeans map[int][]int
-    soybeans = make(map[int][]int)
+    var data map[int][]int
+    data = make(map[int][]int)
     // Objects ID in the map
     count := 0
     // Open dataset
-    soybeanpath, _ := filepath.Abs("./datasets/soybean-large.data")
-    soybeanfile, err := os.Open(soybeanpath)
+    file, err := os.Open(path)
     if err != nil {
         log.Fatal(err)
     }
     // reader := bufio.NewScanner(soybeanfile)
-    reader := csv.NewReader(bufio.NewReader(soybeanfile))
+    reader := csv.NewReader(bufio.NewReader(file))
     // Add each line to the map as a seperate vector
     for {
         // Read CSV line
@@ -45,8 +44,21 @@ func InitSoybeanLarge() map[int][]int {
             }
         }
         // Apend list to the map
-        soybeans[count] = holder
+        data[count] = holder
         count++
     }
+    return data
+}
+
+func InitSoybeanLarge() map[int][]int {
+    // Initialize map
+    soybeanpath, _ := filepath.Abs("./datasets/soybean-large.data")
+    soybeans := initData(soybeanpath)
     return soybeans
+}
+
+func InitSimple() map[int][]int {
+    simplepath, _ := filepath.Abs("./datasets/simple.data")
+    simple := initData(simplepath)
+    return simple
 }
