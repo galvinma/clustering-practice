@@ -11,7 +11,7 @@ import (
 )
 
 // Grabs catagorical data from file and creates a map
-func initData(path string) map[int][]int {
+func InitData(path string) map[int][]int {
     // Initialize map
     var data map[int][]int
     data = make(map[int][]int)
@@ -53,12 +53,12 @@ func initData(path string) map[int][]int {
 func InitSoybeanLarge() map[int][]int {
     // Initialize map
     soybeanpath, _ := filepath.Abs("./datasets/soybean-large.data")
-    soybeans := initData(soybeanpath)
+    soybeans := InitData(soybeanpath)
     return soybeans
 }
 
 func InitSimple() map[int][]int {
     simplepath, _ := filepath.Abs("./datasets/simple.data")
-    simple := initData(simplepath)
+    simple := InitData(simplepath)
     return simple
 }
