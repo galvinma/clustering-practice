@@ -47,9 +47,10 @@ func ModularityDelta(data map[int][]int, network map[int]int, weights [][]int, c
     m := SumNetworkLinks(weights)
 
     q := (((sumin + kiin) / (2 * m)) - (math.Pow(((sumtot + ki) / (2 * m)), 2))) - ((sumin / (2 * m)) - math.Pow((sumtot / (2 * m)), 2) - math.Pow((ki / (2 * m)), 2))
-    if community == 0 && object == 0 {
-        log.Println(q)
-    }
+    // if community == 1 && object == 0 {
+        log.Println("Q for placing object",object,"in community",community,"is",q)
+        log.Println("sumin:",sumin,"sumtot:",sumtot,"ki:",ki,"kiin:",kiin,"m:",m)
+    // }
 
 
     return q
@@ -58,22 +59,28 @@ func ModularityDelta(data map[int][]int, network map[int]int, weights [][]int, c
 
 func AssignCommunities(data map[int][]int, network map[int]int, weights [][]int) map[int]int {
     // Obj ID : Cluster ID
-    var assigned map[int]int
-    assigned = make(map[int]int)
+    coms := []int{0,1,2,3,4,5,6,7,8,9}
     // For each node, calculate the potential modularity delta for each community.
     for k,_ := range(data) {
         // community ID, modularity delta
         var best int
-        var modularity float64
+        modularity := -1.0
 
-        for _,c := range(network) {
-            delta := ModularityDelta(data, network, weights, c, k)
-            if delta > modularity {
+        for _,c := range(coms) {
+            var test map[int]int
+            test = make(map[int]int)
+            for a,b := range(network) {
+                test[a] = b
+            }
+            test[k] = c
+            delta := ModularityDelta(data, test, weights, c, k)
+            if delta > modularity && delta > 0.0 {
                 modularity = delta
-                best = c
+                network[k] = best
             }
         }
-        assigned[k] = best
+
+        log.Println("Determined best fit for object",k,"is community",network[k])
     }
-    return assigned
+    return network
 }
