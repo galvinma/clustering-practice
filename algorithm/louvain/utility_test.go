@@ -7,6 +7,15 @@ import (
     "github.com/galvinma/agora/algorithm/common"
 )
 
+func checkList(id int, memberlist []int) bool {
+    for _,v := range(memberlist) {
+        if id == v {
+            return true
+        }
+    }
+    return false
+}
+
 // Test initial communities
 func TestInitialCommunities(t *testing.T) {
     var communities = map[int]int{
@@ -33,29 +42,43 @@ func TestInitialCommunities(t *testing.T) {
           }
       }
 }
-//
-// func TestGetMembers(t *testing.T) {
-//   // Define communities
-//   var communities = map[int]int{
-//       // Object ID : Cluster ID
-//       0:0,
-//       1:0,
-//       2:0,
-//       3:0,
-//       4:5,
-//       5:5,
-//       6:5,
-//       7:7,
-//       8:8,
-//       9:9,
-//     }
-//
-//     members := GetMembers(communities, 0)
-//     for _,v := range(members) {
-//         if communities[v] != 0 {
-//             t.Errorf("GetMembers returned an incorrect member list. Got %v, wanted %v.",
-//             v, communities[v])
-//         }
-//
-//     }
-// }
+
+func TestGetMembers(t *testing.T) {
+  // Define communities
+  var communities = map[int]int{
+      // Object ID : Cluster ID
+      0:0,
+      1:0,
+      2:0,
+      3:0,
+      4:5,
+      5:5,
+      6:5,
+      7:7,
+      8:8,
+      9:9,
+    }
+
+    // Placement in community "0"
+    zeromembers := []int{0,1,2,3}
+    com := 0
+    members := GetMembers(communities, com)
+    for _,v := range(zeromembers) {
+        if checkList(v, members) != true {
+            t.Errorf("GetMembers failed to place object ID %v in community ID %v.",
+            v, com)
+        }
+    }
+
+    // Placement in community "5"
+    fivemembers := []int{4,5,6}
+    com := 0
+    members := GetMembers(communities, com)
+    for _,v := range(fivemembers) {
+        if checkList(v, members) != true {
+            t.Errorf("GetMembers failed to place object ID %v in community ID %v.",
+            v, com)
+        }
+    }
+
+}
