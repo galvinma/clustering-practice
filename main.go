@@ -13,7 +13,7 @@ func main() {
   network := louvain.InitialCommunities(data)
   weights := louvain.GetWeights(data)
 
-  sumin := louvain.SumCommunityWeights(data, network, weights, 1)
+  sumin := louvain.SumCommunityWeights(network, weights, 1)
   sumtot := louvain.SumIncidentCommunityWeights(data, network, weights, 1)
   ki := louvain.GetIncidentWeights(data, weights, 1)
   kiin := louvain.GetIncidentCommunityWeights(network, weights, 1, 1)
@@ -21,5 +21,5 @@ func main() {
 
   log.Println("sumin:", sumin, "sumtot:", sumtot, "ki:", ki, "kiin:", kiin, "m:", m)
 
-  // log.Println(weights)
+  log.Println(weights)
 }

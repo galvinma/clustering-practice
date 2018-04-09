@@ -72,8 +72,8 @@ func TestGetMembers(t *testing.T) {
 
     // Placement in community "5"
     fivemembers := []int{4,5,6}
-    com := 0
-    members := GetMembers(communities, com)
+    com = 5
+    members = GetMembers(communities, com)
     for _,v := range(fivemembers) {
         if checkList(v, members) != true {
             t.Errorf("GetMembers failed to place object ID %v in community ID %v.",

@@ -38,24 +38,51 @@ func TestGetWeights(t *testing.T) {
         }
     }
 }
-// 
-// func TestSumCommunityWeights(t *testing.T) {
-//     // Define communities
-//     var communities = map[int]int{
-//         // Object ID : Cluster ID
-//         0:0,
-//         1:0,
-//         2:0,
-//         3:0,
-//         4:5,
-//         5:5,
-//         6:5,
-//         7:7,
-//         8:8,
-//         9:9,
-//       }
-//
-//     weights := getTestWeights("./../../datasets/simple.data"))
-//
-//
-// }
+
+func TestSumCommunityWeights(t *testing.T) {
+    weights := getTestWeights("./../../datasets/simple.data")
+    // Define communities
+    var communities = map[int]int{
+        // Object ID : Cluster ID
+        0:0,
+        1:0,
+        2:0,
+        3:0,
+        4:5,
+        5:5,
+        6:5,
+        7:7,
+        8:8,
+        9:9,
+      }
+
+
+
+    com := 0
+    sum := 21.0
+    comsum := SumCommunityWeights(communities, weights, com)
+    if comsum != sum {
+        t.Errorf("SumCommunityWeights returned %v. Correct sum for community %v is %v.",
+        comsum, com, sum)
+
+    }
+
+    com = 5
+    sum = 6.0
+    comsum = SumCommunityWeights(communities, weights, com)
+    if comsum != sum {
+        t.Errorf("SumCommunityWeights returned %v. Correct sum for community %v is %v.",
+        comsum, com, sum)
+
+    }
+
+    com = 9
+    sum = 0.0
+    comsum = SumCommunityWeights(communities, weights, com)
+    if comsum != sum {
+        t.Errorf("SumCommunityWeights returned %v. Correct sum for community %v is %v.",
+        comsum, com, sum)
+
+    }
+
+}

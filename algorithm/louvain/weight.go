@@ -27,7 +27,7 @@ func GetWeights(data map[int][]int) [][]int {
 
 // SUM,in
 // Sum of the weights for a given community
-func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]int, community int) float64 {
+func SumCommunityWeights(network map[int]int, weights [][]int, community int) float64 {
     var sum float64
     members := GetMembers(network, community)
 
@@ -46,7 +46,7 @@ func SumCommunityWeights(data map[int][]int, network map[int]int, weights [][]in
 func SumIncidentCommunityWeights(data map[int][]int, network map[int]int, weights [][]int, community int) float64 {
     var sum float64
     members := GetMembers(network, community)
-    communityweights := SumCommunityWeights(data, network, weights, community)
+    communityweights := SumCommunityWeights(network, weights, community)
     for _,m := range(members) {
         for k,_ := range(data) {
             sum += float64(weights[m][k])
