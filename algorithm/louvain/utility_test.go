@@ -33,29 +33,29 @@ func TestInitialCommunities(t *testing.T) {
           }
       }
 }
-
-func TestGetMembers(t *testing.T) {
-  // Define communities
-  var communities = map[int]int{
-      // Object ID : Cluster ID
-      0:0,
-      1:0,
-      2:0,
-      3:0,
-      4:5,
-      5:5,
-      6:5,
-      7:7,
-      8:8,
-      9:9,
-    }
-
-    members := GetMembers(communities, 0)
-    for _,v := range(members) {
-        if communities[v] != 0 {
-            t.Errorf("GetMembers returned an incorrect member list. Got %v, wanted %v.",
-            v, communities[v])
-        }
-
-    }
-}
+//
+// func TestGetMembers(t *testing.T) {
+//   // Define communities
+//   var communities = map[int]int{
+//       // Object ID : Cluster ID
+//       0:0,
+//       1:0,
+//       2:0,
+//       3:0,
+//       4:5,
+//       5:5,
+//       6:5,
+//       7:7,
+//       8:8,
+//       9:9,
+//     }
+//
+//     members := GetMembers(communities, 0)
+//     for _,v := range(members) {
+//         if communities[v] != 0 {
+//             t.Errorf("GetMembers returned an incorrect member list. Got %v, wanted %v.",
+//             v, communities[v])
+//         }
+//
+//     }
+// }
