@@ -93,7 +93,6 @@ func TestSumCommunityWeights(t *testing.T) {
         comsum, com, sum)
 
     }
-
 }
 
 func TestSumIncidentCommunityWeights(t *testing.T) {
@@ -127,5 +126,96 @@ func TestSumIncidentCommunityWeights(t *testing.T) {
           comsum, com, sum)
 
       }
+}
 
+func TestGetIncidentWeights(t *testing.T) {
+    data := getData("./../../datasets/simple.data")
+    weights := getTestWeights("./../../datasets/simple.data")
+
+    object := 1
+    expected := 33.0
+    sum := GetIncidentWeights(data, weights, object)
+    if sum != expected {
+        t.Errorf("GetIncidentWeights returned %v. Correct sum for object %v is %v.",
+        sum, object, expected)
+    }
+
+    object = 5
+    expected = 15.0
+    sum = GetIncidentWeights(data, weights, object)
+    if sum != expected {
+        t.Errorf("GetIncidentWeights returned %v. Correct sum for object %v is %v.",
+        sum, object, expected)
+    }
+
+}
+
+func TestGetIncidentCommunityWeights(t *testing.T) {
+    weights := getTestWeights("./../../datasets/simple.data")
+    communities := forcedSimpleCommunities()
+
+    object := 1
+    community := 0
+    expected := 9.0
+    sum := GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+    object = 1
+    community = 5
+    expected = 13.0
+    sum = GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+    object = 5
+    community = 9
+    expected = 0.0
+    sum = GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+    object = 8
+    community = 8
+    expected = 0.0
+    sum = GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+    object = 4
+    community = 0
+    expected = 13.0
+    sum = GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+    object = 4
+    community = 7
+    expected = 2.0
+    sum = GetIncidentCommunityWeights(communities, weights, community, object)
+    if sum != expected {
+        t.Errorf("GetIncidentCommunityWeights returned %v. Correct sum for object:community %v:%v is %v.",
+        sum, object, community, expected)
+    }
+
+}
+
+func TestSumNetworkLinks(t *testing.T) {
+    weights := getTestWeights("./../../datasets/simple.data")
+    sum := SumNetworkLinks(weights)
+    expected := 125.0
+    if sum != expected {
+        t.Errorf("Network sum returned %v instead of expected %v.",
+        sum, expected)
+    }
 }
