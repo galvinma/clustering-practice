@@ -56,8 +56,6 @@ func TestSumCommunityWeights(t *testing.T) {
         9:9,
       }
 
-
-
     com := 0
     sum := 21.0
     comsum := SumCommunityWeights(communities, weights, com)
