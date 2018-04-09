@@ -7,11 +7,34 @@ import (
     "github.com/galvinma/agora/algorithm/common"
 )
 
+func getData(path string) map[int][]int {
+    filepath, _ := filepath.Abs(path)
+    data := common.InitData(filepath)
+    return data
+}
+
 func getTestWeights(path string) [][]int {
     simplepath, _ := filepath.Abs(path)
     data := common.InitData(simplepath)
     weights := GetWeights(data)
     return weights
+}
+
+func forcedSimpleCommunities() map[int]int {
+    var communities = map[int]int{
+        // Object ID : Cluster ID
+        0:0,
+        1:0,
+        2:0,
+        3:0,
+        4:5,
+        5:5,
+        6:5,
+        7:7,
+        8:8,
+        9:9,
+      }
+      return communities
 }
 
 func TestGetWeights(t *testing.T) {
@@ -42,19 +65,7 @@ func TestGetWeights(t *testing.T) {
 func TestSumCommunityWeights(t *testing.T) {
     weights := getTestWeights("./../../datasets/simple.data")
     // Define communities
-    var communities = map[int]int{
-        // Object ID : Cluster ID
-        0:0,
-        1:0,
-        2:0,
-        3:0,
-        4:5,
-        5:5,
-        6:5,
-        7:7,
-        8:8,
-        9:9,
-      }
+    communities := forcedSimpleCommunities()
 
     com := 0
     sum := 21.0
@@ -82,5 +93,39 @@ func TestSumCommunityWeights(t *testing.T) {
         comsum, com, sum)
 
     }
+
+}
+
+func TestSumIncidentCommunityWeights(t *testing.T) {
+      data := getData("./../../datasets/simple.data")
+      weights := getTestWeights("./../../datasets/simple.data")
+      communities := forcedSimpleCommunities()
+
+      com := 0
+      sum := 76.0
+      comsum := SumIncidentCommunityWeights(data, communities, weights, com)
+      if comsum != sum {
+          t.Errorf("SumIncidentCommunityWeights returned %v. Correct sum for community %v is %v.",
+          comsum, com, sum)
+
+      }
+
+      com = 5
+      sum = 61.0
+      comsum = SumIncidentCommunityWeights(data, communities, weights, com)
+      if comsum != sum {
+          t.Errorf("SumIncidentCommunityWeights returned %v. Correct sum for community %v is %v.",
+          comsum, com, sum)
+
+      }
+
+      com = 9
+      sum = 15.0
+      comsum = SumIncidentCommunityWeights(data, communities, weights, com)
+      if comsum != sum {
+          t.Errorf("SumIncidentCommunityWeights returned %v. Correct sum for community %v is %v.",
+          comsum, com, sum)
+
+      }
 
 }

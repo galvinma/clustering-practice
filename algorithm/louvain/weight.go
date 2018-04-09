@@ -53,7 +53,7 @@ func SumIncidentCommunityWeights(data map[int][]int, network map[int]int, weight
         }
     }
     // Sum columns, subtract community weights
-    sum = (sum/2.0) - communityweights
+    sum = sum - (2 * communityweights)
     return sum
 }
 
