@@ -1,9 +1,8 @@
 package louvain
 
 import (
-    // "log"
-
-    // "github.com/galvinma/agora/algorithm/common"
+    "math"
+    "log"
 )
 
 /* Modularity Calculation
@@ -40,35 +39,41 @@ m = sum of the weights of all the links in the network
 
 
 // Calculate the change in modularity by placing node i into community C.
-// func ModularityDelta(data map[int][]int, network map[int]int, weights map[int][]int, community int, object int) float64 {
-//     // ki,in = sum of the weights of the links from i to nodes in C
-//     SumCluster := GetCommunityWeights(data, network, community, object)
-//     // SUM,tot = sum of the weights of the links indicent to C
-//     SumIncident := SumIncidentWeight(data, object)
-//     // ki,in = sum of the weights of the links from i to nodes in C
-//
-//
-//
-//
-//     // m = sum of the weights of all the links in the network
-//     // This will never change. Move this outside of delta calculation.
-//     m := SumNetworkLinks(weights)
-//
-//
-// }
+func ModularityDelta(data map[int][]int, network map[int]int, weights [][]int, community int, object int) float64 {
+    sumin := SumCommunityWeights(network, weights, community)
+    sumtot := SumIncidentCommunityWeights(data, network, weights, community)
+    ki := GetIncidentWeights(data, weights, object)
+    kiin := GetIncidentCommunityWeights(network, weights, community, object)
+    m := SumNetworkLinks(weights)
 
-// func Modularity() {
-//     // community ID, modularity delta
-//     var q map[int]int
-//     q = make(map[int]int)
-//
-//     // For each node, calculate the potential modularity delta for each community.
-//     for k,v := range(data) {
-//         change := ModularityDelta()
-//     }
+    q := (((sumin + kiin) / (2 * m)) - (math.Pow(((sumtot + ki) / (2 * m)), 2))) - ((sumin / (2 * m)) - math.Pow((sumtot / (2 * m)), 2) - math.Pow((ki / (2 * m)), 2))
+    if community == 0 && object == 0 {
+        log.Println(q)
+    }
 
-    // Get max modularity delta out of map.
 
-    // Merge node into community based upon max modularity delta.
+    return q
 
-// }
+}
+
+func AssignCommunities(data map[int][]int, network map[int]int, weights [][]int) map[int]int {
+    // Obj ID : Cluster ID
+    var assigned map[int]int
+    assigned = make(map[int]int)
+    // For each node, calculate the potential modularity delta for each community.
+    for k,_ := range(data) {
+        // community ID, modularity delta
+        var best int
+        var modularity float64
+
+        for _,c := range(network) {
+            delta := ModularityDelta(data, network, weights, c, k)
+            if delta > modularity {
+                modularity = delta
+                best = c
+            }
+        }
+        assigned[k] = best
+    }
+    return assigned
+}
