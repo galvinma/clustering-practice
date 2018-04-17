@@ -6,16 +6,13 @@ import (
 
     "github.com/galvinma/agora/algorithm/common"
 )
-
-/* Generate a list of all objects in space S and their associated density ranking for a given radius r. */
-
-
-// struct keeps cluster ID & density
+// struct keeps Object ID & density
 type Object struct {
     ID int
     Density int
 }
 
+/* Generate a list of all objects in space S and their associated density ranking for a given radius r. */
 func HierdencIndex(objects map[int][]int, r int) ([]Object) {
     // sorted list of densest hypercubes for radius r
     var index []Object

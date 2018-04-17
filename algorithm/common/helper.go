@@ -1,4 +1,4 @@
-package hierdenc
+package common
 
 func InList(i int, c []int) bool {
     for _, cluster := range(c) {

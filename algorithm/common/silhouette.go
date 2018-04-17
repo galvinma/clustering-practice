@@ -1,9 +1,7 @@
-package hierdenc
+package common
 
 import (
     "math"
-
-    "github.com/galvinma/agora/algorithm/common"
 )
 
 func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float64 {
@@ -18,7 +16,7 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
         sisters := GetObjectsWithinCluster(v, clusters)
         for _, s := range(sisters) {
             // Calculate distance between objects
-            hd, _ := common.HammingDistance(objects[k], objects[s])
+            hd, _ := HammingDistance(objects[k], objects[s])
             distances = append(distances, float64(hd))
         }
 
@@ -44,7 +42,7 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
             sisters := GetObjectsWithinCluster(c, clusters)
             for _, s := range(sisters) {
                 // Calculate distance between objects
-                hd, _ := common.HammingDistance(objects[k], objects[s])
+                hd, _ := HammingDistance(objects[k], objects[s])
                 distances = append(distances, float64(hd))
             }
             // find average distance and add to map
@@ -56,8 +54,6 @@ func CalculateSilhouetteScore(clusters map[int]int, objects map[int][]int) float
           bi[k] = min
         }
     }
-
-
 
     // For each object, calculate a silouette coefficient (si).å
     // si = (bi - ai) / max(ai, bi)
