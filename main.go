@@ -1,22 +1,20 @@
 package main
 
 import (
-    "log"
+	"log"
 
-    "github.com/galvinma/agora/algorithm/common"
-    "github.com/galvinma/agora/algorithm/hierdenc"
-    // "github.com/galvinma/agora/algorithm/louvain"
+	"github.com/galvinma/agora/algorithm/common"
+	// "github.com/galvinma/agora/algorithm/louvain"
 )
 
 func main() {
-    log.Println("Initializing data...")
-    data := common.InitSoybeanLarge()
+	log.Println("Initializing data...")
+	data := common.InitSoybeanLarge()
 
-    clusters := hierdenc.HIERDENC(data)
-    log.Println("Assigned clusters to",len(clusters),"out of",len(data),"objects")
-    for k,v := range(clusters) {
-        log.Println("Object",k,"assigned to cluster",v)
-    }
-
+	// clusters := kmodes.KMODES(data)
+	// log.Println("Assigned clusters to",len(clusters),"out of",len(data),"objects")
+	// for k,v := range(clusters) {
+	//     log.Println("Object",k,"assigned to cluster",v)
+	// }
 
 }
